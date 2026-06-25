@@ -131,6 +131,22 @@ Inicie um servidor PHP local:
 php -S localhost:8000
 ```
 
+No Windows, voce tambem pode usar o script pronto:
+
+```bat
+iniciar_servidor_portfolio.bat
+```
+
+Esse script inicia o servidor na pasta correta do projeto, cria `.env` a partir de `.env.example` se necessario e abre a ferramenta no navegador.
+
+Se a porta `8000` ja estiver ocupada por outro servidor, execute:
+
+```bat
+parar_servidor_portfolio.bat
+```
+
+Depois rode `iniciar_servidor_portfolio.bat` novamente.
+
 Depois acesse:
 
 ```text
