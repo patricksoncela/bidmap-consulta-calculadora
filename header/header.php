@@ -47,11 +47,6 @@ if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="historico_consultas.php">
-                        Hist&oacute;rico de Consultas
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="historico_consultas.php">
                         Extrato de Cr&eacute;ditos
                     </a>
                 </li>
