@@ -457,17 +457,33 @@ function bidmap_demo_render_page(string $title, string $subtitle, array $rows, s
 
 function bidmap_demo_output_pdf(): void
 {
-    $pdf = "%PDF-1.4\n"
-        . "1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj\n"
-        . "2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj\n"
-        . "3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >> endobj\n"
-        . "4 0 obj << /Length 97 >> stream\nBT /F1 18 Tf 72 720 Td (PDF demonstrativo do portfolio BidMap) Tj 0 -28 Td (Nenhuma API externa foi acionada.) Tj ET\nendstream endobj\n"
-        . "5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj\n"
-        . "xref\n0 6\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000241 00000 n \n0000000388 00000 n \n"
-        . "trailer << /Size 6 /Root 1 0 R >>\nstartxref\n458\n%%EOF";
+    $objects = [
+        '1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj',
+        '2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj',
+        '3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << >> >> endobj',
+    ];
+
+    $pdf = "%PDF-1.4\n";
+    $offsets = [0];
+
+    foreach ($objects as $object) {
+        $offsets[] = strlen($pdf);
+        $pdf .= $object . "\n";
+    }
+
+    $xrefOffset = strlen($pdf);
+    $pdf .= "xref\n0 " . (count($objects) + 1) . "\n";
+    $pdf .= "0000000000 65535 f \n";
+
+    foreach (array_slice($offsets, 1) as $offset) {
+        $pdf .= sprintf("%010d 00000 n \n", $offset);
+    }
+
+    $pdf .= "trailer << /Size " . (count($objects) + 1) . " /Root 1 0 R >>\n";
+    $pdf .= "startxref\n" . $xrefOffset . "\n%%EOF";
 
     header('Content-Type: application/pdf');
-    header('Content-Disposition: attachment; filename="processo-demo.pdf"');
+    header('Content-Disposition: attachment; filename="processo-demo-em-branco.pdf"');
     header('Content-Length: ' . strlen($pdf));
     echo $pdf;
     exit;
