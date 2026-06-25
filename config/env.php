@@ -11,6 +11,7 @@ function bidmap_load_env(): void
     $envPaths = array_unique([
         dirname(__DIR__) . '/.env',
         dirname(__DIR__, 2) . '/.env',
+        dirname(__DIR__) . '/.env.example',
     ]);
 
     foreach ($envPaths as $envPath) {
