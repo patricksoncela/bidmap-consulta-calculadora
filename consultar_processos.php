@@ -279,6 +279,15 @@ function processos_historico_status(array $item): string
     $status = strtolower((string) ($item['status_resultado'] ?? 'pendente'));
     $validade = trim((string) ($item['data_validade'] ?? ''));
 
+    if (
+        function_exists('bidmap_portfolio_demo_mode')
+        && bidmap_portfolio_demo_mode()
+        && ($item['modalidade_pedido'] ?? '') === 'pdf_processo'
+        && $status === 'sucesso'
+    ) {
+        return 'sucesso';
+    }
+
     if (($item['modalidade_pedido'] ?? '') === 'pdf_processo' && $status === 'sucesso') {
         $linkPdf = trim((string) ($item['link_pdf_cliente'] ?? ''));
         $consultaId = (int) ($item['id_consulta'] ?? 0);
