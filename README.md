@@ -42,6 +42,25 @@ Atuei na evolucao da ferramenta trabalhando em:
 - Calculadora de investimento com cenarios, custos de aquisicao/venda, receitas recorrentes e graficos.
 - Visualizacao de tabelas completas do calculo.
 
+## Screenshots
+
+As imagens do projeto podem ser adicionadas em `docs/screenshots/`.
+
+Sugestao de arquivos:
+
+- `docs/screenshots/calculadora.png`
+- `docs/screenshots/resultado-calculadora.png`
+- `docs/screenshots/consulta-processos.png`
+- `docs/screenshots/historico-consultas.png`
+- `docs/screenshots/detalhe-processo.png`
+
+Depois de capturar as imagens, substitua esta lista por previews em Markdown:
+
+```md
+![Calculadora](docs/screenshots/calculadora.png)
+![Consulta de Processos](docs/screenshots/consulta-processos.png)
+```
+
 ## Stack
 
 - PHP
