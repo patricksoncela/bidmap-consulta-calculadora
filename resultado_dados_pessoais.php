@@ -14,7 +14,7 @@ require_once __DIR__ . '/helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
 
-if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+if (false && function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
     $tipo = strtolower((string) ($_GET['tipo_consulta'] ?? 'cpf'));
     $consulta = bidmap_demo_find_consulta((int) ($_GET['consulta_id'] ?? 0));
     $entrada = (string) ($_GET['q'] ?? ($consulta['entrada_original'] ?? ''));
@@ -321,7 +321,20 @@ $pedidoIdAcompanhamento = (int) ($_GET['pedido_id'] ?? 0);
 $abrindoHistorico = ($_GET['origem'] ?? '') === 'historico';
 $resultado = null;
 $erro = null;
+$isPortfolioDemo = function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode();
 
+if ($isPortfolioDemo) {
+    $consultaDemo = bidmap_demo_find_consulta($consultaIdHistorico);
+    $tipoConsulta = strtolower((string) ($tipoConsulta ?: ($consultaDemo['modalidade_pedido'] ?? 'dados_cpf')));
+    $tipoConsulta = str_contains($tipoConsulta, 'cnpj') ? 'cnpj' : 'cpf';
+    $entrada = (string) ($entrada ?: ($consultaDemo['entrada_original'] ?? ($tipoConsulta === 'cnpj' ? '12.345.678/0001-90' : '123.456.789-00')));
+    $resultado = [
+        'ok' => true,
+        'origem' => 'portfolio_demo',
+        'consulta_id' => $consultaIdHistorico ?: ($tipoConsulta === 'cnpj' ? 9002 : 9001),
+        'dados' => bidmap_demo_dados_pessoais($tipoConsulta, (string) $entrada),
+    ];
+} else {
 try {
     $mysqli = view_database_connection();
 
@@ -348,6 +361,7 @@ try {
     }
 } catch (Throwable $exception) {
     $erro = $exception->getMessage();
+}
 }
 
 $raw = $resultado['dados'] ?? [];

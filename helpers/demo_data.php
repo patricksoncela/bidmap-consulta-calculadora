@@ -217,6 +217,209 @@ function bidmap_demo_find_consulta(int $consultaId): ?array
     return null;
 }
 
+function bidmap_demo_dados_pessoais(string $tipoConsulta, string $entrada = ''): array
+{
+    $tipoConsulta = strtolower($tipoConsulta) === 'cnpj' ? 'cnpj' : 'cpf';
+
+    if ($tipoConsulta === 'cnpj') {
+        return [
+            'numero_de_inscricao' => preg_replace('/\D+/', '', $entrada) ?: '12345678000190',
+            'nome' => 'BidMap Demo Tecnologia LTDA',
+            'fantasia' => 'BidMap Demo',
+            'situacao' => 'Ativa',
+            'abertura' => '15/03/2021',
+            'natureza_juridica' => 'Sociedade Empresaria Limitada',
+            'tipo' => 'Matriz',
+            'dt_situacao_cadastral' => '15/03/2021',
+            'situacao_especial' => '',
+            'porte' => 'Empresa de Pequeno Porte',
+            'opcao_pelo_simples' => 'Sim',
+            'opcao_pelo_mei' => 'Nao',
+            'capital_social' => '85000.00',
+            'entidade_federativo_responsavel' => '',
+            'logradouro' => 'Avenida Paulista',
+            'numero' => '1000',
+            'bairro' => 'Bela Vista',
+            'municipio' => 'Sao Paulo',
+            'uf' => 'SP',
+            'cep' => '01310-100',
+            'complemento' => 'Conjunto 1201',
+            'email' => 'contato@bidmapdemo.com.br',
+            'telefone' => '(11) 3000-0000',
+            'atividade_principal' => [
+                'code' => '62.01-5-01',
+                'text' => 'Desenvolvimento de programas de computador sob encomenda',
+            ],
+            'atividades_secundarias' => [
+                ['code' => '62.04-0-00', 'text' => 'Consultoria em tecnologia da informacao'],
+                ['code' => '63.19-4-00', 'text' => 'Portais, provedores de conteudo e outros servicos de informacao'],
+            ],
+            'quadro_socios' => [
+                ['nome' => 'Patrick Demo', 'qualificacao' => 'Socio administrador'],
+                ['nome' => 'Gabriela Demo', 'qualificacao' => 'Socia'],
+            ],
+        ];
+    }
+
+    return [
+        'documento' => preg_replace('/\D+/', '', $entrada) ?: '12345678900',
+        'codigoPessoa' => 'DEMO-102938',
+        'nomeCompleto' => 'Patrick Demo',
+        'genero' => 'Masculino',
+        'dataDeNascimento' => '12/05/1999',
+        'anos' => 27,
+        'zodiaco' => 'Touro',
+        'nomeDaMae' => 'Maria Demo',
+        'statusCadastral' => 'Regular',
+        'dataStatusCadastral' => '10/01/2026',
+        'salarioEstimado' => '4800.00',
+        'lastUpdate' => '25/06/2026',
+        'listaTelefones' => [
+            [
+                'telefoneComDDD' => '(11) 99999-0000',
+                'tipoTelefone' => 'Celular',
+                'operadora' => 'Vivo',
+                'whatsApp' => 'Sim',
+                'telemarketingBloqueado' => 'Nao',
+            ],
+            [
+                'telefoneComDDD' => '(11) 3333-0000',
+                'tipoTelefone' => 'Fixo',
+                'operadora' => 'Claro',
+                'whatsApp' => 'Nao',
+                'telemarketingBloqueado' => 'Sim',
+            ],
+        ],
+        'listaEmails' => [
+            ['enderecoEmail' => 'patrick.demo@email.com'],
+            ['enderecoEmail' => 'portfolio@bidmapdemo.com.br'],
+        ],
+        'listaEnderecos' => [
+            [
+                'logradouro' => 'Rua Demo',
+                'numero' => '123',
+                'bairro' => 'Centro',
+                'cidade' => 'Sao Paulo',
+                'uf' => 'SP',
+                'complemento' => 'Apto 45',
+                'cep' => '01000-000',
+            ],
+            [
+                'logradouro' => 'Avenida Portfolio',
+                'numero' => '456',
+                'bairro' => 'Jardins',
+                'cidade' => 'Sao Paulo',
+                'uf' => 'SP',
+                'complemento' => 'Sala 8',
+                'cep' => '01400-000',
+            ],
+        ],
+    ];
+}
+
+function bidmap_demo_processos_documento(string $entrada = ''): array
+{
+    return [
+        'nome' => 'Patrick Demo',
+        'documento' => preg_replace('/\D+/', '', $entrada) ?: '12345678900',
+        'lawsuits' => [
+            bidmap_demo_processo_detalhe('1000000-00.2024.8.26.0100') + [
+                'documentPolarity' => 'ACTIVE',
+            ],
+            [
+                'number' => '1000001-00.2024.8.26.0100',
+                'cnjMasked' => '1000001-00.2024.8.26.0100',
+                'courtType' => 'TRABALHISTA',
+                'instance' => '1',
+                'mainSubject' => 'Rescisao do Contrato de Trabalho',
+                'iBroadCNJSubjectName' => 'Direito do Trabalho - Contrato Individual de Trabalho',
+                'courtName' => 'TRT 2 Regiao',
+                'courtDistrict' => 'Sao Paulo',
+                'state' => 'SP',
+                'author' => 'Patrick Demo',
+                'reu' => 'Empresa Demo LTDA',
+                'documentPolarity' => 'ACTIVE',
+                'lastMovementDate' => '2026-06-18 14:20:00',
+                'value' => '18500.00',
+            ],
+            [
+                'number' => '2000000-55.2023.8.19.0001',
+                'cnjMasked' => '2000000-55.2023.8.19.0001',
+                'courtType' => 'CIVEL',
+                'instance' => '2',
+                'mainSubject' => 'Obrigacoes',
+                'iBroadCNJSubjectName' => 'Direito Civil - Obrigacoes',
+                'courtName' => 'TJRJ',
+                'courtDistrict' => 'Rio de Janeiro',
+                'state' => 'RJ',
+                'author' => 'Banco Demo S.A.',
+                'reu' => 'Patrick Demo',
+                'documentPolarity' => 'PASSIVE',
+                'lastMovementDate' => '2026-05-28 09:10:00',
+                'value' => '42000.00',
+            ],
+        ],
+    ];
+}
+
+function bidmap_demo_processo_detalhe(string $numero = '1000000-00.2024.8.26.0100'): array
+{
+    return [
+        'number' => $numero,
+        'cnjMasked' => $numero,
+        'cnjOnlyNumbers' => preg_replace('/\D+/', '', $numero),
+        'titulo' => 'Patrick Demo x Empresa Demo LTDA',
+        'author' => 'Patrick Demo',
+        'reu' => 'Empresa Demo LTDA',
+        'courtType' => 'CIVEL',
+        'lawsuitType' => 'Procedimento Comum Civel',
+        'className' => 'Procedimento Comum Civel',
+        'procedureName' => 'Procedimento Comum Civel',
+        'courtName' => 'TJSP',
+        'courtDistrict' => 'Foro Central Civel - Sao Paulo',
+        'state' => 'SP',
+        'jurisdiction' => 'Justica Estadual',
+        'judge' => 'Dra. Ana Demo',
+        'forum' => 'Foro Central Civel',
+        'mainSubject' => 'Responsabilidade Civil',
+        'iCNJSubjectName' => 'Indenizacao por Dano Material',
+        'iBroadCNJSubjectName' => 'Direito Civil - Responsabilidade Civil - Indenizacao por Dano Material',
+        'iCNJSubjectNumber' => '10433',
+        'iBroadCNJSubjectNumber' => '899',
+        'lawArea' => 'Direito Civil',
+        'value' => '35000.00',
+        'distributionDate' => '2024-02-20',
+        'noticeDate' => '2024-02-22',
+        'lastMovementDate' => '2026-06-20 16:45:00',
+        'captureDate' => '2026-06-25 10:30:00',
+        'statusName' => 'Em andamento',
+        'instance' => '1',
+        'numberOfParties' => 4,
+        'numberOfUpdates' => 6,
+        'lawSuitAge' => '2 anos e 4 meses',
+        'averageNumberOfUpdatesPerMonth' => '1.8',
+        'parties' => [
+            ['name' => 'Patrick Demo', 'specificType' => 'Autor', 'document' => '123.456.789-00'],
+            ['name' => 'Empresa Demo LTDA', 'specificType' => 'Reu', 'document' => '12.345.678/0001-90'],
+            ['name' => 'Dra. Camila Advocacia', 'specificType' => 'Advogada do autor', 'oab' => 'OAB/SP 000000'],
+            ['name' => 'Dr. Roberto Defesa', 'specificType' => 'Advogado do reu', 'oab' => 'OAB/SP 111111'],
+        ],
+        'movements' => [
+            ['date' => '2026-06-20', 'title' => 'Juntada de peticao', 'description' => 'Peticao intermediaria protocolada pela parte autora.', 'source' => 'TJSP'],
+            ['date' => '2026-05-12', 'title' => 'Conclusos para decisao', 'description' => 'Processo encaminhado ao gabinete para analise.', 'source' => 'TJSP'],
+            ['date' => '2026-04-03', 'title' => 'Manifestacao da parte requerida', 'description' => 'Apresentada contestacao com documentos.', 'source' => 'TJSP'],
+            ['date' => '2026-03-15', 'title' => 'Audiencia designada', 'description' => 'Audiencia de conciliacao marcada em ambiente virtual.', 'source' => 'TJSP'],
+            ['date' => '2025-11-08', 'title' => 'Citada a parte requerida', 'description' => 'Ciencia confirmada no portal eletronico.', 'source' => 'TJSP'],
+            ['date' => '2024-02-22', 'title' => 'Distribuido por sorteio', 'description' => 'Processo distribuido ao juizo competente.', 'source' => 'TJSP'],
+        ],
+        'documents' => [
+            ['name' => 'Peticao inicial', 'format' => 'PDF', 'date' => '2024-02-20', 'url' => '#'],
+            ['name' => 'Decisao interlocutoria', 'format' => 'PDF', 'date' => '2026-05-12', 'url' => '#'],
+            ['name' => 'Certidao de publicacao', 'format' => 'PDF', 'date' => '2026-06-20', 'url' => '#'],
+        ],
+    ];
+}
+
 function bidmap_demo_render_page(string $title, string $subtitle, array $rows, string $backUrl = 'consultar_processos.php#historico-consultas'): void
 {
     if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {

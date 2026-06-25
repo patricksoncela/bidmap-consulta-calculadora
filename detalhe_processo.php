@@ -15,7 +15,7 @@ require_once __DIR__ . '/helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
 
-if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+if (false && function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
     $consulta = bidmap_demo_find_consulta((int) ($_GET['consulta_id'] ?? 0));
     $entrada = (string) ($_GET['q'] ?? ($consulta['entrada_original'] ?? '1000000-00.2024.8.26.0100'));
 
@@ -908,7 +908,21 @@ $erro = null;
 $aviso = null;
 $creditosConsultaCompleta = 0.0;
 $creditosPdfProcesso = 0.0;
+$consultaDireta = $acaoConsultaDireta;
+$isPortfolioDemo = function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode();
 
+if ($isPortfolioDemo) {
+    $consultaDemo = bidmap_demo_find_consulta($consultaIdOrigem);
+    $numeroProcesso = (string) ($numeroProcesso ?: ($consultaDemo['entrada_original'] ?? '1000000-00.2024.8.26.0100'));
+    $creditosConsultaCompleta = 3.0;
+    $creditosPdfProcesso = 12.0;
+    $resultado = [
+        'ok' => true,
+        'origem' => 'portfolio_demo',
+        'consulta_id' => $consultaIdOrigem ?: 9004,
+        'dados' => bidmap_demo_processo_detalhe((string) $numeroProcesso),
+    ];
+} else {
 try {
     $mysqli = detalhe_db();
     $tipoPedidoModel = new TipoPedidoModel($mysqli);
@@ -1010,6 +1024,7 @@ try {
     }
 } catch (Throwable $exception) {
     $erro = $exception->getMessage();
+}
 }
 
 if ($consultaDireta && $erro) {
