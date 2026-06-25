@@ -5,6 +5,10 @@ body {
     border: 0;
 }
 
+:root {
+    --bidmap-header-height: 58px;
+}
+
 .header {
     position: relative;
     top: 0 !important;
@@ -16,17 +20,18 @@ body {
     padding: 15px 20px;
     background: #0E1156;
     /* background: linear-gradient(90deg, rgba(26, 0, 91, 1) 0%, rgba(54, 2, 94, 1) 22%, rgba(179, 12, 107, 1) 100%); */
-    z-index: 1000;
+    z-index: 1002;
     margin: 0 !important;
     border-top: 0;
+    min-height: var(--bidmap-header-height);
 }
 
 #sidebar {
-    height: 100%;
+    height: calc(100vh - var(--bidmap-header-height));
     width: 250px;
     position: fixed;
     z-index: 1001;
-    top: 0;
+    top: var(--bidmap-header-height);
     left: 0;
     background-color: #F2F2F2;
     overflow-x: hidden;
@@ -94,7 +99,7 @@ body {
 
 .btn-container {
     width: 100%;
-    display: flex;
+    display: none;
     justify-content: end;
     padding: 0px 10px;
 }
@@ -126,7 +131,7 @@ body {
 #sidebar .nav-link.bold {
     font-weight: bold;
     font-size: 18px;
-    padding-top: 30px;
+    padding-top: 0;
 }
 
 #sidebar .pro-label {
@@ -140,7 +145,7 @@ body {
 @media (max-width: 768px) {
     #sidebar {
         width: 100%;
-        height: 100%;
+        height: calc(100vh - var(--bidmap-header-height));
         padding-top: 0px;
         transform: translate3d(-100vw, 0px, 0px);
     }
