@@ -1,0 +1,15 @@
+.env
+*.env
+!*.env.example
+storage/*
+!storage/.gitkeep
+!storage/logs/.gitkeep
+!storage/processos_pdf/.gitkeep
+cache/
+*.log
+*.tmp
+*.zip
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

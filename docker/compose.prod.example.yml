@@ -1,0 +1,102 @@
+name: bidmap-consultas-worker
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    volumes:
+      - /opt/bidmap-consultas/redis-data:/data
+
+  job-publisher:
+    build:
+      context: /opt/bidmap-consultas/app
+      dockerfile: docker/worker/Dockerfile
+    env_file:
+      - /opt/bidmap-consultas/env/worker.env
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.50
+    healthcheck:
+      test: ["CMD", "php", "scripts/health_consultas_worker.php", "publisher"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    volumes:
+      - /opt/bidmap-consultas/storage:/var/www/html/storage
+    command: ["php", "scripts/publicar_jobs_redis_loop.php", "100", "3"]
+
+  redis-worker:
+    build:
+      context: /opt/bidmap-consultas/app
+      dockerfile: docker/worker/Dockerfile
+    env_file:
+      - /opt/bidmap-consultas/env/worker.env
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1.00
+    healthcheck:
+      test: ["CMD", "php", "scripts/health_consultas_worker.php", "worker"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    volumes:
+      - /opt/bidmap-consultas/storage:/var/www/html/storage
+    command: ["php", "scripts/processar_jobs_redis_loop.php", "5"]
+
+  python-worker:
+    profiles: ["python"]
+    build:
+      context: /opt/bidmap-consultas/app
+      dockerfile: docker/python-worker/Dockerfile
+    env_file:
+      - /opt/bidmap-consultas/env/worker.env
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1.00
+    healthcheck:
+      test: ["CMD", "python", "-m", "workers.python.worker", "health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    volumes:
+      - /opt/bidmap-consultas/storage:/var/www/html/storage
+    command: ["python", "-m", "workers.python.worker"]

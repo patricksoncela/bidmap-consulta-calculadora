@@ -1,0 +1,475 @@
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#codigoTableBody {
+    max-height: 30px;
+    overflow-y: auto;
+}
+
+.tableCode {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#table-avista,
+#table-price,
+#table-sac,
+#table-parcelado {
+    display: none;
+}
+
+#main>.container.conteudo-com-espaco {
+    max-width: 960px !important;
+}
+
+.result-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 24px;
+    color: #1f2937;
+}
+
+.result-card {
+    background-color: #ffffff;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    margin-bottom: 1.8rem;
+}
+
+.result-table {
+    width: min(100%, 960px);
+    border-collapse: collapse;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 28px;
+}
+
+.table.result-table {
+    width: min(100%, 960px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 28px !important;
+}
+
+#meuGrafico1,
+#meuGrafico2,
+#meuGrafico3,
+#meuGrafico4 {
+    display: block;
+    width: min(100%, 960px) !important;
+    max-width: 960px;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.div-choice {
+    margin: 0 0 18px;
+}
+
+.ir-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-top: 8px !important;
+    margin-bottom: 12px;
+}
+
+.ir-options .form-check {
+    margin-right: 0 !important;
+    margin-bottom: 0;
+}
+
+#resultado-container {
+    margin-top: 0;
+}
+
+#resultado-container>br {
+    display: none;
+}
+
+.result-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+.result-table tr:last-child td {
+    border-bottom: none;
+}
+
+.result-table td:first-child {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.result-table td:last-child {
+    text-align: right;
+}
+
+.result-table tbody {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.result-table tr {
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 13px 14px;
+    background: #edf6ff;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.result-table tr:nth-child(1) {
+    order: 1;
+}
+
+.result-table tr:nth-child(2) {
+    order: 2;
+}
+
+.result-table tr:nth-child(3) {
+    order: 5;
+}
+
+.result-table tr:nth-child(4) {
+    order: 6;
+}
+
+.result-table tr:nth-child(5) {
+    order: 3;
+}
+
+.result-table tr:nth-child(6) {
+    order: 4;
+}
+
+.result-table tr:nth-child(7) {
+    order: 7;
+}
+
+.result-table tr:nth-child(8) {
+    order: 8;
+}
+
+.result-table tr:nth-child(n + 5) {
+    background: #ffffff;
+    color: #374151;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.table.result-table td,
+.result-table td {
+    display: block;
+    padding: 0 !important;
+    border: 0 !important;
+    border-bottom: 0 !important;
+}
+
+.result-table td:last-child {
+    color: #0f172a;
+    font-size: 1.08rem;
+    font-weight: 750;
+    line-height: 1.12;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.result-table tr:nth-child(n + 5) td:first-child,
+.result-table tr:nth-child(n + 5) td:last-child {
+    color: #374151;
+}
+
+.result-table td:first-child {
+    font-size: 0.82rem;
+    line-height: 1.2;
+    color: #1f2937;
+}
+
+.result-table .help-tooltip {
+    margin-left: 3px;
+}
+
+/* Tooltip da tabela de resultados e itens da calculadora. */
+.help-tooltip {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 4px;
+    color: #c7c7c7;
+}
+
+.tooltip-icon {
+    color: #c7c7c7;
+    font-size: 0.875rem;
+}
+
+/* Para células do Heatmap. */
+.sensibilidade-table .cell[data-toggle="tooltip"] {
+    margin-left: 0;
+    display: flex;
+}
+
+.sensibilidade-table th,
+.sensibilidade-table td {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.sensibilidade-table td {
+    min-width: 80px;
+}
+
+.sensibilidade-table .axis-cell {
+    text-align: left;
+}
+
+.retangulo {
+    background-color: white;
+    min-height: 58px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid gray;
+    padding: 10px 0px;
+
+}
+
+.remove-padding {
+    padding: 16px !important;
+}
+
+.separate-icon {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.content-button {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.retangulo .btn {
+    white-space: nowrap;
+}
+
+
+#salvarButton {
+    color: #007BFF;
+
+}
+
+#recuperarButton {
+    color: #007BFF;
+}
+
+.editIcon {
+    color: #007bffa7;
+    cursor: pointer;
+}
+
+.deleteIcon {
+    color: rgba(255, 0, 0, 0.614);
+    cursor: pointer;
+}
+
+/* Barra inferior mais legível no mobile, com rolagem quando houver muitos botões. */
+@media (max-width: 700px) {
+    .retangulo {
+        overflow-x: visible;
+        padding: 8px;
+    }
+
+    .content-button {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        padding: 0;
+    }
+
+    .button-group {
+        display: contents;
+    }
+
+    .retangulo .btn {
+        min-width: 0;
+        width: 100%;
+        padding: 9px 6px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        border-width: 2px;
+        background-color: #fff;
+    }
+
+    .retangulo .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .result-table tbody {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .result-table tr {
+        min-height: 82px;
+        padding: 14px;
+    }
+
+    .result-table td:last-child {
+        font-size: 1.18rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .content-button {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #calcularButton {
+        grid-column: 3;
+    }
+
+    .retangulo .btn {
+        font-size: 0.8rem;
+    }
+}
+
+.error-message {
+    color: red;
+}
+
+.table {
+    display: none;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: #f5f5f5;
+}
+
+.container-logo {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.container-logo h1 {
+    margin-top: 50px;
+    font-size: 2em;
+}
+
+/* Media query para telas com largura máxima de 1000 pixels */
+@media only screen and (max-width: 1000px) {
+    .container-logo img {
+        max-width: 30%;
+    }
+
+    .container-logo h1 {
+        font-size: 1.5em;
+    }
+}
+
+/* Media query adicional para telas com largura máxima de 700 pixels */
+@media only screen and (max-width: 700px) {
+    .container-logo img {
+        max-width: 60%;
+    }
+}
+
+
+h1,
+h2,
+h3 {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Print para que o heatmap mantenha as cores no preview de impressão do navegador. */
+@media print {
+    html,
+    body,
+    #resultado-container,
+    .sensibilidade-card,
+    .sensibilidade-card *,
+    .sensibilidade-table,
+    .sensibilidade-table * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .retangulo {
+        display: none;
+    }
+
+    div#sidebar,
+    header.header {
+        display: none;
+    }
+
+    #meuGrafico1,
+    #meuGrafico2,
+    #meuGrafico3,
+    #meuGrafico4 {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .sensibilidade-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+    }
+
+    .sensibilidade-table .cell {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+}

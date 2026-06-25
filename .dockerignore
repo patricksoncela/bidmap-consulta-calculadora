@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+docker/env/worker.env
+storage/processos_pdf/*
+storage/logs/*
+backup
+nao_enviar_prod
+cache
+node_modules
+vendor
