@@ -121,6 +121,7 @@ cp .env.example .env
 Para avaliar apenas a calculadora sem login, mantenha:
 
 ```env
+BIDMAP_PORTFOLIO_DEMO=true
 CALCULADORA_REQUIRE_AUTH=false
 ```
 
@@ -136,7 +137,15 @@ Depois acesse:
 http://localhost:8000/calculadora.php
 ```
 
-As consultas completas dependem de MySQL, Redis e chaves de APIs externas configuradas no `.env`.
+Para abrir a ferramenta de consultas em modo portfolio:
+
+```text
+http://localhost:8000/consultar_processos.php
+```
+
+No modo demo, a aplicacao cria uma sessao ficticia, usa saldo de teste, remove navegacao para producao e evita chamadas reais para checkout, login e APIs externas.
+
+As consultas completas em modo real dependem de MySQL, Redis e chaves de APIs externas configuradas no `.env`.
 
 ## Workers e Filas
 

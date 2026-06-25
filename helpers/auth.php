@@ -13,7 +13,40 @@ function bidmap_auth_env_bool(string $key, bool $default = false): bool
 
 function bidmap_creditos_reais_ativos(): bool
 {
+    if (bidmap_portfolio_demo_mode()) {
+        return false;
+    }
+
     return !bidmap_auth_env_bool('DADOS_PESSOAIS_SKIP_CREDITOS', false);
+}
+
+function bidmap_portfolio_demo_mode(): bool
+{
+    return bidmap_auth_env_bool('BIDMAP_PORTFOLIO_DEMO', true);
+}
+
+function bidmap_bootstrap_portfolio_demo_session(): void
+{
+    if (!bidmap_portfolio_demo_mode()) {
+        return;
+    }
+
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        @session_start();
+    }
+
+    if (!isset($_SESSION['cliente']) || !is_array($_SESSION['cliente'])) {
+        $_SESSION['cliente'] = [];
+    }
+
+    $_SESSION['cliente'] = array_replace([
+        'id' => (int) (function_exists('bidmap_env') ? bidmap_env('DADOS_PESSOAIS_TEST_USER_ID', '1') : 1),
+        'email' => 'avaliador@example.com',
+        'nome' => 'Avaliador Portfolio',
+        'saldo' => (float) (function_exists('bidmap_env') ? bidmap_env('DADOS_PESSOAIS_TEST_SALDO', '100') : 100),
+        'creditos' => (float) (function_exists('bidmap_env') ? bidmap_env('DADOS_PESSOAIS_TEST_SALDO', '100') : 100),
+        'liberado' => true,
+    ], $_SESSION['cliente']);
 }
 
 function bidmap_usuario_id_sessao(): ?int
@@ -109,6 +142,8 @@ function bidmap_usuario_logado(): bool
 
 function bidmap_require_login_for_creditos(): void
 {
+    bidmap_bootstrap_portfolio_demo_session();
+
     if (!bidmap_creditos_reais_ativos() || bidmap_usuario_logado()) {
         return;
     }
@@ -116,8 +151,8 @@ function bidmap_require_login_for_creditos(): void
     $loginUrl = bidmap_local_login_enabled()
         ? 'nao_enviar_prod/login_local/dev_login.php'
         : (string) (function_exists('bidmap_env')
-        ? bidmap_env('BIDMAP_TOOLS_LOGIN_URL', 'https://bidmap.com.br/mapa')
-        : 'https://bidmap.com.br/mapa');
+        ? bidmap_env('BIDMAP_TOOLS_LOGIN_URL', 'consultar_processos.php')
+        : 'consultar_processos.php');
 
     header('Location: ' . $loginUrl);
     exit;
@@ -125,6 +160,8 @@ function bidmap_require_login_for_creditos(): void
 
 function bidmap_require_login_for_creditos_json(): void
 {
+    bidmap_bootstrap_portfolio_demo_session();
+
     if (!bidmap_creditos_reais_ativos() || bidmap_usuario_logado()) {
         return;
     }

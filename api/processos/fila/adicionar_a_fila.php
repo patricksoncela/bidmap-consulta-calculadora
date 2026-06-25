@@ -33,6 +33,15 @@ function fila_adicionar_redirect(array $params): void
     exit;
 }
 
+function fila_adicionar_demo_redirect(): void
+{
+    header('Location: ../../../consultar_processos.php?' . http_build_query([
+        'consulta_erro' => 'Modo demo: a consulta seria enviada para a fila Redis, mas nenhuma API externa foi acionada.',
+        'historico' => 1,
+    ]) . '#historico-consultas');
+    exit;
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(405);
@@ -57,6 +66,10 @@ try {
             'consulta_erro' => 'Acao invalida para a fila de processos.',
             'return' => 'consultar_processos.php',
         ]);
+    }
+
+    if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+        fila_adicionar_demo_redirect();
     }
 
     $mysqli = fila_adicionar_db();

@@ -4,8 +4,13 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once __DIR__ . '/config/env.php';
+require_once __DIR__ . '/helpers/auth.php';
+
+bidmap_bootstrap_portfolio_demo_session();
+
 if (!isset($_SESSION['cliente']['email'])) {
-    header("Location: https://bidmap.com.br/mapa");
+    header('Location: ' . bidmap_env('BIDMAP_TOOLS_LOGIN_URL', 'consultar_processos.php'));
     exit();
 }
 

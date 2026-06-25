@@ -134,10 +134,14 @@ function processos_usuario_credito_service(): UsuarioCreditoService
 
 function processos_creditos_checkout_url(int $valor): string
 {
+    if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+        return '#';
+    }
+
     $fallbacks = [
-        25 => 'https://checkout.bidmap.com.br/pay/25-creditos',
-        50 => 'https://checkout.bidmap.com.br/pay/50-creditos',
-        100 => 'https://checkout.bidmap.com.br/pay/100-creditos-bidmap',
+        25 => '#',
+        50 => '#',
+        100 => '#',
     ];
 
     $fallback = $fallbacks[$valor] ?? '#';
@@ -1114,7 +1118,7 @@ if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {
                             Dashboard
                         </a>
                     <?php endif; ?>
-                    <a class="dashboard-shortcut tribunais-shortcut" href="https://consultadeprocessos.com.br/status" target="_blank" rel="noopener noreferrer">
+                    <a class="dashboard-shortcut tribunais-shortcut" href="#" aria-disabled="true">
                         <i class="fa-solid fa-landmark" aria-hidden="true"></i>
                         Tribunais
                     </a>

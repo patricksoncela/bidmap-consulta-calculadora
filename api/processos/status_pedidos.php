@@ -39,6 +39,16 @@ function status_pedidos_response(array $data): void
     exit;
 }
 
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    status_pedidos_response([
+        'ok' => true,
+        'demo' => true,
+        'message' => 'Modo demo: nenhum pedido real foi consultado.',
+        'pedidos' => [],
+        'items' => [],
+    ]);
+}
+
 function status_pedidos_request_data(): array
 {
     $data = $_POST;

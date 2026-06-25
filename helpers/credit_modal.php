@@ -4,10 +4,14 @@ declare(strict_types=1);
 if (!function_exists('bidmap_creditos_checkout_url')) {
     function bidmap_creditos_checkout_url(int $valor): string
     {
+        if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+            return '#';
+        }
+
         $fallbacks = [
-            25 => 'https://checkout.bidmap.com.br/pay/25-creditos',
-            50 => 'https://checkout.bidmap.com.br/pay/50-creditos',
-            100 => 'https://checkout.bidmap.com.br/pay/100-creditos-bidmap',
+            25 => '#',
+            50 => '#',
+            100 => '#',
         ];
 
         $fallback = $fallbacks[$valor] ?? '#';

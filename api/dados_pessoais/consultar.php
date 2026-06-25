@@ -117,6 +117,23 @@ if (trim($entrada) === '') {
     ], 400);
 }
 
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    json_response([
+        'ok' => true,
+        'demo' => true,
+        'message' => 'Modo demo: dados ficticios retornados sem acionar APIs externas.',
+        'tipo_consulta' => $tipoConsulta,
+        'documento' => preg_replace('/\D+/', '', (string) $entrada),
+        'dados' => [
+            'nome' => $tipoConsulta === 'cpf' ? 'Pessoa Demo' : 'Empresa Demo LTDA',
+            'documento' => preg_replace('/\D+/', '', (string) $entrada),
+            'situacao' => 'Demonstração',
+            'origem' => 'Portfolio local',
+        ],
+        'saldo' => (float) bidmap_env('DADOS_PESSOAIS_TEST_SALDO', '100'),
+    ]);
+}
+
 try {
     $mysqli = database_connection();
     $service = new DocumentoService($mysqli, null, usuario_credito_service());

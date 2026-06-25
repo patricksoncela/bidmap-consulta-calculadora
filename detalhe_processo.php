@@ -1122,7 +1122,7 @@ if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {
                             Dashboard
                         </a>
                     <?php endif; ?>
-                    <a class="dashboard-shortcut tribunais-shortcut" href="https://consultadeprocessos.com.br/status" target="_blank" rel="noopener noreferrer">
+                    <a class="dashboard-shortcut tribunais-shortcut" href="#" aria-disabled="true">
                         <i class="fa-solid fa-landmark" aria-hidden="true"></i>
                         Tribunais
                     </a>

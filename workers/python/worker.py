@@ -126,7 +126,7 @@ class Settings:
     processo_rapido_storage_dir: str = env("PROCESSO_RAPIDO_STORAGE_DIR", "storage/processos_pdf")
     processo_rapido_pdf_retention_days: int = int(env("PROCESSO_RAPIDO_PDF_RETENTION_DAYS", "30"))
 
-    credit_api_base_url: str = env("BIDMAP_USUARIOS_API_BASE_URL", "https://bidmap.com.br/api/usuarios").rstrip("/")
+    credit_api_base_url: str = env("BIDMAP_USUARIOS_API_BASE_URL", "http://localhost:8000/api/usuarios").rstrip("/")
     credit_api_token: str = env("BIDMAP_USUARIOS_API_TOKEN", "")
     credit_api_auth_prefix: str = env("BIDMAP_USUARIOS_API_AUTH_PREFIX", "token")
     credit_api_host_header: str = env("BIDMAP_USUARIOS_API_HOST_HEADER", "")

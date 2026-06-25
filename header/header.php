@@ -18,7 +18,7 @@ if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {
     <span onclick="openNav()" class="botao-menu">
         <img src="img/menu.png" alt="menu" width="30" height="20">
     </span>
-    <a href="https://bidmap.com.br">
+    <a href="consultar_processos.php">
         <img src="img/bidmap-logo-branco.png" alt="logo" width="126" height="28">
     </a>
 </header>

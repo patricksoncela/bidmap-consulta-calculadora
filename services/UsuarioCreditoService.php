@@ -22,7 +22,7 @@ class UsuarioCreditoService
 
     public function __construct(?string $baseUrl = null, ?string $token = null, int $timeout = 20)
     {
-        $this->baseUrl = rtrim((string) ($baseUrl ?? $this->env('BIDMAP_USUARIOS_API_BASE_URL', 'https://bidmap.com.br/api/usuarios')), '/');
+        $this->baseUrl = rtrim((string) ($baseUrl ?? $this->env('BIDMAP_USUARIOS_API_BASE_URL', 'http://localhost:8000/api/usuarios')), '/');
         $this->token = (string) ($token ?? $this->env('BIDMAP_USUARIOS_API_TOKEN', ''));
         $this->timeout = max(1, (int) $this->env('BIDMAP_CREDITOS_API_TIMEOUT', (string) $timeout));
         $this->connectTimeout = max(1, (int) $this->env('BIDMAP_CREDITOS_API_CONNECT_TIMEOUT', '3'));
@@ -32,7 +32,7 @@ class UsuarioCreditoService
         $this->hostHeader = trim((string) $this->env('BIDMAP_USUARIOS_API_HOST_HEADER', ''));
         $this->followRedirects = filter_var($this->env('BIDMAP_USUARIOS_API_FOLLOW_REDIRECTS', 'true'), FILTER_VALIDATE_BOOLEAN);
         $this->fallbackBaseUrl = rtrim(trim((string) $this->env('BIDMAP_USUARIOS_API_FALLBACK_BASE_URL', 'http://127.0.0.1/api/usuarios')), '/');
-        $this->fallbackHostHeader = trim((string) $this->env('BIDMAP_USUARIOS_API_FALLBACK_HOST_HEADER', 'bidmap.com.br'));
+        $this->fallbackHostHeader = trim((string) $this->env('BIDMAP_USUARIOS_API_FALLBACK_HOST_HEADER', 'localhost'));
         $this->fallbackFollowRedirects = filter_var($this->env('BIDMAP_USUARIOS_API_FALLBACK_FOLLOW_REDIRECTS', 'false'), FILTER_VALIDATE_BOOLEAN);
         $this->fallbackUserId = (int) $this->env('BIDMAP_CREDITOS_FALLBACK_USER_ID', '0');
         $fallbackSaldo = trim((string) $this->env('BIDMAP_CREDITOS_FALLBACK_SALDO', ''));

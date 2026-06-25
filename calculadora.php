@@ -3,6 +3,9 @@ if (file_exists(__DIR__ . '/.env')) {
     $_ENV = array_merge($_ENV, parse_ini_file(__DIR__ . '/.env', false, INI_SCANNER_RAW));
 }
 
+require_once __DIR__ . '/config/env.php';
+require_once __DIR__ . '/helpers/auth.php';
+
 function envBool(string $key, bool $default = false): bool
 {
     $value = $_ENV[$key] ?? getenv($key);
@@ -28,10 +31,12 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-$requireAuth = envBool('CALCULADORA_REQUIRE_AUTH', true);
+bidmap_bootstrap_portfolio_demo_session();
+
+$requireAuth = envBool('CALCULADORA_REQUIRE_AUTH', !bidmap_portfolio_demo_mode());
 
 if ($requireAuth && !isset($_SESSION['cliente']['email'])) {
-    header("Location: https://bidmap.com.br/mapa");
+    header('Location: ' . bidmap_env('BIDMAP_TOOLS_LOGIN_URL', 'consultar_processos.php'));
     exit();
 }
 
