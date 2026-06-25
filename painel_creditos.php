@@ -9,6 +9,7 @@ require_once __DIR__ . '/helpers/auth.php';
 require_once __DIR__ . '/services/UsuarioCreditoService.php';
 require_once __DIR__ . '/database/models/ControleCreditoExternoModel.php';
 require_once __DIR__ . '/database/models/CustoConsultaModel.php';
+require_once __DIR__ . '/helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
 
@@ -118,7 +119,9 @@ if ($usuarioConsulta <= 0 && filter_var($usuarioBusca, FILTER_VALIDATE_EMAIL)) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ((function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $mensagem = 'Modo demo: a acao foi simulada, mas nenhum dado foi persistido.';
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = (string) ($_POST['acao'] ?? '');
     $valor = (float) str_replace(',', '.', (string) ($_POST['valor'] ?? '0'));
     $descricao = trim((string) ($_POST['descricao'] ?? 'Ajuste manual no painel'));
@@ -191,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if ($view === 'custos') {
+if ($view === 'custos' && !(function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode())) {
     try {
         $custosOperacoes = painel_custos_operacoes();
     } catch (Throwable $exception) {
@@ -345,6 +348,19 @@ try {
     $mysqli->close();
 } catch (Throwable $exception) {
     $erro = $erro ?: 'Não foi possível carregar os dados do painel: ' . $exception->getMessage();
+}
+
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    $demoPainel = bidmap_demo_painel();
+    $erro = null;
+    $metricas = $demoPainel['metricas'];
+    $historico = $demoPainel['historico'];
+    $historicoUsuario = $demoPainel['historicoUsuario'];
+    $fornecedores = $demoPainel['fornecedores'];
+    $saldosExternos = $demoPainel['saldosExternos'];
+    $tipos = $demoPainel['tipos'];
+    $custosOperacoes = $demoPainel['custosOperacoes'];
+    $saldoUsuario = (float) bidmap_env('DADOS_PESSOAIS_TEST_SALDO', '100');
 }
 
 $titulos = [

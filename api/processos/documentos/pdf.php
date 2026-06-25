@@ -8,8 +8,13 @@ require_once __DIR__ . '/../../../services/ProcessoDocumentoService.php';
 require_once __DIR__ . '/../../../helpers/processos_actions.php';
 require_once __DIR__ . '/../../../helpers/auth.php';
 require_once __DIR__ . '/../../../helpers/pdf_download_token.php';
+require_once __DIR__ . '/../../../helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
+
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    bidmap_demo_output_pdf();
+}
 
 function pdf_env_bool(string $key, bool $default = false): bool
 {

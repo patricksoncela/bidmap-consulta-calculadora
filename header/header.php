@@ -51,8 +51,8 @@ if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="painel_creditos.php">
-                        Painel de Cr&eacute;ditos
+                    <a class="nav-link" href="historico_consultas.php">
+                        Extrato de Cr&eacute;ditos
                     </a>
                 </li>
             </ul>

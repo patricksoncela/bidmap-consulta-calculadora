@@ -10,6 +10,7 @@ require_once __DIR__ . '/services/CreditoExtratoSyncService.php';
 require_once __DIR__ . '/helpers/auth.php';
 require_once __DIR__ . '/helpers/credit_modal.php';
 require_once __DIR__ . '/helpers/account_menu.php';
+require_once __DIR__ . '/helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
 
@@ -375,6 +376,18 @@ try {
 $totalPaginas = max(1, (int) ceil($total / $limite));
 $inicioPagina = $total > 0 ? $offset + 1 : 0;
 $fimPagina = min($offset + count($transacoes), $total);
+
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    $erro = null;
+    $syncAviso = null;
+    $creditos = (float) bidmap_env('DADOS_PESSOAIS_TEST_SALDO', '100');
+    $demoTransacoes = bidmap_demo_extrato();
+    $total = count($demoTransacoes);
+    $transacoes = array_slice($demoTransacoes, $offset, $limite);
+    $totalPaginas = max(1, (int) ceil($total / $limite));
+    $inicioPagina = $total > 0 ? $offset + 1 : 0;
+    $fimPagina = min($offset + count($transacoes), $total);
+}
 
 if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {
     define('BIDMAP_HEADER_ASSETS_LOADED', true);

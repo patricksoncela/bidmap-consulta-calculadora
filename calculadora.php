@@ -1087,12 +1087,15 @@ if ($requestMethod === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Viabilidade </title>
+    <link rel="stylesheet" href="css/header.css?v=<?php echo filemtime('css/header.css'); ?>">
     <link rel="stylesheet" href="css/style4.css?v=<?php echo filemtime('css/style4.css'); ?>">
     <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/header.css?v=<?php echo filemtime('css/header.css'); ?>">
     <link href="img/logo.png" rel="icon">
+    <script src="js/header.js?v=<?php echo filemtime('js/header.js'); ?>"></script>
     <script src="https://kit.fontawesome.com/1ad52ad40a.js" crossorigin="anonymous"></script>
 
 
@@ -1100,6 +1103,7 @@ if ($requestMethod === "POST") {
 </head>
 <body>
 <div id="main" style="padding-bottom: 90px;">
+    <?php define('BIDMAP_HEADER_ASSETS_LOADED', true); ?>
     <?php include_once 'header/header.php' ?>
     <div class="container conteudo-com-espaco">
 

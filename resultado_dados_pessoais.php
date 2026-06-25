@@ -10,8 +10,27 @@ require_once __DIR__ . '/database/models/PedidoUsuarioModel.php';
 require_once __DIR__ . '/helpers/auth.php';
 require_once __DIR__ . '/helpers/credit_modal.php';
 require_once __DIR__ . '/helpers/account_menu.php';
+require_once __DIR__ . '/helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
+
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    $tipo = strtolower((string) ($_GET['tipo_consulta'] ?? 'cpf'));
+    $consulta = bidmap_demo_find_consulta((int) ($_GET['consulta_id'] ?? 0));
+    $entrada = (string) ($_GET['q'] ?? ($consulta['entrada_original'] ?? ''));
+
+    bidmap_demo_render_page(
+        $tipo === 'cnpj' ? 'Dados empresariais - Demo' : 'Dados pessoais - Demo',
+        'Resultado mockado para avaliacao do fluxo de dados cadastrais.',
+        [
+            'Documento' => $entrada,
+            'Nome/Razao social' => $tipo === 'cnpj' ? 'Empresa Demo LTDA' : 'Pessoa Demo',
+            'Situacao' => 'Demonstração',
+            'Origem' => 'Portfolio local',
+            'Status' => 'Disponivel',
+        ]
+    );
+}
 
 function view_env_bool(string $key, bool $default = false): bool
 {

@@ -11,8 +11,28 @@ require_once __DIR__ . '/helpers/processos_actions.php';
 require_once __DIR__ . '/helpers/auth.php';
 require_once __DIR__ . '/helpers/credit_modal.php';
 require_once __DIR__ . '/helpers/account_menu.php';
+require_once __DIR__ . '/helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
+
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    $consulta = bidmap_demo_find_consulta((int) ($_GET['consulta_id'] ?? 0));
+    $entrada = (string) ($_GET['q'] ?? ($consulta['entrada_original'] ?? '1000000-00.2024.8.26.0100'));
+
+    bidmap_demo_render_page(
+        'Detalhes do processo - Demo',
+        'Resumo mockado de partes, movimentacoes e documentos processuais.',
+        [
+            'Numero do processo' => $entrada,
+            'Classe' => 'Procedimento Comum Civel',
+            'Tribunal' => 'TJSP',
+            'Parte autora' => 'Pessoa Demo',
+            'Parte requerida' => 'Empresa Demo LTDA',
+            'Ultima movimentacao' => 'Juntada de peticao em modo demo',
+            'Documentos' => 'Peticao inicial, decisao e certidao demonstrativas',
+        ]
+    );
+}
 
 function detalhe_env_bool(string $key, bool $default = false): bool
 {

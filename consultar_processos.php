@@ -12,6 +12,7 @@ require_once __DIR__ . '/helpers/processos_actions.php';
 require_once __DIR__ . '/helpers/auth.php';
 require_once __DIR__ . '/helpers/account_menu.php';
 require_once __DIR__ . '/helpers/pdf_download_token.php';
+require_once __DIR__ . '/helpers/demo_data.php';
 
 bidmap_require_login_for_creditos();
 
@@ -837,6 +838,62 @@ function processos_consulta_recente_janela_dias(array $item): int
     return 30;
 }
 
+function processos_demo_historico_filtrado(
+    string $busca,
+    string $documento,
+    string $modalidade,
+    string $status
+): array {
+    $items = bidmap_demo_consultas();
+
+    if ($busca !== '') {
+        $needle = function_exists('mb_strtolower') ? mb_strtolower($busca, 'UTF-8') : strtolower($busca);
+        $items = array_values(array_filter($items, static function (array $item) use ($needle): bool {
+            $haystack = implode(' ', [
+                (string) ($item['entrada_original'] ?? ''),
+                (string) ($item['entrada_normalizada'] ?? ''),
+                (string) ($item['modalidade_pedido'] ?? ''),
+                (string) ($item['mensagem_resultado'] ?? ''),
+            ]);
+            $haystack = function_exists('mb_strtolower') ? mb_strtolower($haystack, 'UTF-8') : strtolower($haystack);
+
+            return str_contains($haystack, $needle);
+        }));
+    }
+
+    if ($documento !== '') {
+        $items = array_values(array_filter($items, static function (array $item) use ($documento): bool {
+            $modalidadeItem = (string) ($item['modalidade_pedido'] ?? '');
+            $digitos = preg_replace('/\D+/', '', (string) ($item['entrada_normalizada'] ?? ''));
+
+            if ($documento === 'cnj') {
+                return in_array($modalidadeItem, ['detalhes_processo', 'pdf_processo'], true);
+            }
+
+            return ($documento === 'cpf' && strlen($digitos) === 11)
+                || ($documento === 'cnpj' && strlen($digitos) === 14);
+        }));
+    }
+
+    if ($modalidade !== '') {
+        $items = array_values(array_filter($items, static function (array $item) use ($modalidade): bool {
+            $modalidadeItem = (string) ($item['modalidade_pedido'] ?? '');
+
+            return $modalidade === 'dados'
+                ? in_array($modalidadeItem, ['dados_cpf', 'dados_cnpj'], true)
+                : $modalidadeItem === $modalidade;
+        }));
+    }
+
+    if ($status !== '') {
+        $items = array_values(array_filter($items, static function (array $item) use ($status): bool {
+            return (string) ($item['status_resultado'] ?? '') === $status;
+        }));
+    }
+
+    return $items;
+}
+
 try {
     $mysqli = processos_db();
     $idUsuarioHistorico = processos_usuario_id();
@@ -1088,6 +1145,19 @@ try {
 
 if (!defined('BIDMAP_HEADER_ASSETS_LOADED')) {
     define('BIDMAP_HEADER_ASSETS_LOADED', true);
+}
+
+if (function_exists('bidmap_portfolio_demo_mode') && bidmap_portfolio_demo_mode()) {
+    $demoHistorico = processos_demo_historico_filtrado(
+        $historicoBusca,
+        $historicoFiltroDocumento,
+        $historicoFiltroModalidade,
+        $historicoFiltroStatus
+    );
+    $historicoErro = null;
+    $historicoTotal = count($demoHistorico);
+    $historicoConsultas = array_slice($demoHistorico, $historicoOffset, $historicoLimite);
+    $consultasRecentes = array_slice(bidmap_demo_consultas(), 0, 5);
 }
 ?>
 <!DOCTYPE html>

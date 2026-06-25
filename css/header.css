@@ -106,6 +106,18 @@ body {
     display: inline-block;
 }
 
+#sidebar .nav,
+#sidebar .sub-nav {
+    display: block !important;
+    flex-wrap: initial !important;
+    margin: 0;
+}
+
+#sidebar .nav-item {
+    display: block;
+    width: 100%;
+}
+
 #sidebar .nav-link.menu-consulta-link {
     font-size: 15px;
     white-space: nowrap;
